@@ -73,3 +73,17 @@ jobs:
           asset_path: ./${{ github.sha }}.zip
           asset_name: source_code_with_libraries.zip
           asset_content_type: application/zip
+          
+ publish:
+  runs-on: ubunto-latest
+  steps:
+    - name: create release
+      uses: actions/create-release@v1
+      evn:
+        GITHUB_TOKEN: ${{ secrets.github_token }}
+      with:
+        tag_name: ${{ github.run_number }}
+        release_name: Release from ${{ github.run_number }}
+        body: New release for ${{ github.sha }}. Release notes on the documentation site
+        draft: false
+        prerelease: false
